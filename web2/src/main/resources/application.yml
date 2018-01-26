@@ -1,0 +1,19 @@
+server:
+  port: 8090
+  context-path: /web2
+
+logging.level.root: info
+
+#spring的数据源配置
+spring.datasource:
+  url: jdbc:mysql://localhost:3306/uam
+  username: root
+  password: root
+  driverClassName: com.mysql.jdbc.Driver
+
+spring.jpa:
+  database: mysql
+  show-sql: true
+  hibernate.ddl-auto: update
+  hibernate.naming-strategy: org.hibernate.cfg.ImprovedNamingStrategy
+  properties.hibernate.dialect: org.hibernate.dialect.MySQL5Dialect

@@ -1,0 +1,6 @@
+web1模块是sso项目中的一个web模块，用来模拟一个使用单点登录的网站。
+该模块所有的url访问都要通过一个自定义过滤器AuthenticationFilter。在这个过滤器过滤url的时候，有两种情况可以使得url正常访问。
+	情况1、cookie中包含一个名称为authid1的cookie，表示用户已经得到了验证。
+	情况2、在url参数中有一个ticket参数。这个参数会被发送到cas模块下进行验证。如果验证成功，表示该ticket是有效的。
+		在验证ticket有效后，要生成自己的cookie。因为ticket在cas模块中调用过一次后就失效了。
+	如果上述另种情况都不满足，则需要程序重定向到cas模块的登录验证url(/login/logon)中，去验证用户是否登录。
