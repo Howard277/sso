@@ -17,6 +17,7 @@ import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.BoundHashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
@@ -45,6 +46,12 @@ public class LoginController {
     @Resource
     private RedisTemplate<String, String> redisTemplate;
 
+    @Value("${sessiontimeout}")
+    private Integer sessiontimeout;
+
+    @Value("${cookietimeout}")
+    private Integer cookietimeout;
+
     /**
      * 进入登录界面
      *
@@ -65,7 +72,7 @@ public class LoginController {
             if (null == session.getAttribute(AllConstant.USERKEY)) {
                 //对于未登录的情况，需要正常进入登录界面并将目标路径保存到session中
                 session.setAttribute("target", target);
-                log.info(session.getId());
+                session.setMaxInactiveInterval(sessiontimeout);
             } else {
                 //对于已经登录的情况，直接创建ticket并重定向到目标路径
                 String ticket = UUID.randomUUID().toString();
@@ -75,6 +82,12 @@ public class LoginController {
                 return "redirect:" + target + "?ticket=" + ticket;
             }
         }
+
+        // 设置cookie为持久化cookie
+        Cookie cookie = new Cookie("SESSION",session.getId());
+        cookie.setMaxAge(cookietimeout);
+        response.addCookie(cookie);
+        log.info(session.getId());
         return "/login/login";
     }
 
@@ -129,7 +142,6 @@ public class LoginController {
      * @return
      */
     @RequestMapping("logout")
-    @ResponseBody
     public String logout(HttpSession session) {
         session.setMaxInactiveInterval(0);
 

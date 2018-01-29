@@ -33,3 +33,9 @@ spring.datasource:
 #  hibernate.ddl-auto: update
 #  hibernate.naming-strategy: org.hibernate.cfg.ImprovedNamingStrategy
 #  properties.hibernate.dialect: org.hibernate.dialect.MySQL5Dialect
+
+# session的过期时间，单位是分钟   1440表示1天
+sessiontimeout: 1440
+
+# cookie的过期时间，单位是秒  86400表示1天
+cookietimeout: 86400
