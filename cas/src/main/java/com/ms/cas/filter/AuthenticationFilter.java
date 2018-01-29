@@ -1,10 +1,6 @@
 package com.ms.cas.filter;
 
-import static com.ms.cas.constant.AllConstant.AUTHID;
-import static com.ms.cas.constant.AllConstant.DESKEY;
-
 import java.io.IOException;
-import java.util.UUID;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -12,18 +8,12 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.ms.cas.constant.AllConstant;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
-
-import com.ms.cas.config.LoginUser;
-import com.ms.cas.crypt.MyDes;
 
 /**
  * 自定义验证过滤器
@@ -32,9 +22,6 @@ import com.ms.cas.crypt.MyDes;
  */
 @Component
 public class AuthenticationFilter implements Filter {
-
-    @Autowired
-    private LoginUser loginUser;
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {

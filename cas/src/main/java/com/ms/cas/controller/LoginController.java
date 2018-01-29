@@ -1,10 +1,7 @@
 package com.ms.cas.controller;
 
-import static com.ms.cas.constant.AllConstant.AUTHID;
-
 import java.io.IOException;
 import java.net.URL;
-import java.util.Set;
 import java.util.UUID;
 
 import javax.annotation.Resource;
@@ -24,7 +21,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import com.ms.cas.config.LoginUser;
 import com.ms.cas.constant.AllConstant;
 
 /**
@@ -36,12 +32,6 @@ import com.ms.cas.constant.AllConstant;
 @Controller
 @RequestMapping(value = {"login", ""})
 public class LoginController {
-
-    /**
-     * 验证列表
-     */
-    @Autowired
-    private LoginUser loginUser;
 
     @Resource
     private RedisTemplate<String, String> redisTemplate;
@@ -179,9 +169,6 @@ public class LoginController {
                 cookie.setMaxAge(1);
                 response.addCookie(cookie);
             }
-        }
-        if (loginUser.getTicketList() != null) {
-            loginUser.getTicketList().clear();
         }
         return "ok";
     }
