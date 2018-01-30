@@ -86,7 +86,7 @@ public class LoginController {
      *
      * @return
      */
-    @RequestMapping("/check")
+    @PostMapping("/check")
     public String check(@RequestParam("username") String username, @RequestParam("password") String password,
                         HttpServletResponse response, Model model, HttpSession session, HttpServletRequest request) {
         if ((null != username) && (null != password) && (username.equals(password))) {
@@ -131,7 +131,7 @@ public class LoginController {
      * @param session
      * @return
      */
-    @RequestMapping("logout")
+    @GetMapping("logout")
     public String logout(HttpSession session) {
         session.setMaxInactiveInterval(0);
 
@@ -145,7 +145,7 @@ public class LoginController {
      * @param ticket
      * @return
      */
-    @RequestMapping("auth")
+    @GetMapping("auth")
     @ResponseBody
     public JSONObject auth(@RequestParam("ticket") String ticket) {
         JSONObject object = new JSONObject();
@@ -158,18 +158,5 @@ public class LoginController {
         }
         // 验证ticket是否正确
         return object;
-    }
-
-    @RequestMapping("clear")
-    @ResponseBody
-    public String clear(HttpServletRequest request, HttpServletResponse response) {
-        Cookie[] cookies = request.getCookies();
-        if (null != cookies) {
-            for (Cookie cookie : cookies) {
-                cookie.setMaxAge(1);
-                response.addCookie(cookie);
-            }
-        }
-        return "ok";
     }
 }
