@@ -16,7 +16,8 @@ import javax.persistence.*;
 @Entity
 @Table(indexes = {@Index(name = "index_cityName",unique = false,columnList = "cityName"),
         @Index(name = "index_levelCode",unique = false,columnList = "levelCode"),
-        @Index(name = "index_levelName",unique = false,columnList = "levelName"),})
+        @Index(name = "index_levelName",unique = false,columnList = "levelName"),}
+        )
 public class City {
     /**
      * 城市编码

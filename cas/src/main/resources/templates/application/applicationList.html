@@ -1,0 +1,64 @@
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout/layout">
+<head>
+    <title>应用程序列表</title>
+</head>
+<body>
+<section layout:fragment="content">
+    <div>
+        <a class="btn btn-primary radius" href="javascript:;" onclick="javascript:$('#searchDiv').toggle();"><i
+                class="Hui-iconfont">&#xe709;</i> SEARCH</a>
+        <a class="btn btn-primary radius" type="button" id="add"
+           onclick="openAddPage()"><i class="Hui-iconfont">&#xe604;</i>添加</a>
+        <a class="btn btn-primary radius" type="button" id="edit"><i class="Hui-iconfont">&#xe60c;</i>修改</a>
+        <a class="btn btn-danger radius" type="button" id="delete"><i class="Hui-iconfont">&#xe609;</i>删除</a>
+    </div>
+    <br/>
+    <div id="content">
+        <script type="text/html" id="table1">
+            <table class="table table-border table-bordered table-bg table-hover table-sort">
+                <thead>
+                <tr>
+                    <td>系统编码</td>
+                    <td>系统名称</td>
+                    <td>创建人</td>
+                    <td>创建时间</td>
+                </tr>
+                </thead>
+                <tbody>
+                {{each content}}
+                <tr>
+                    <td>{{$value.appCode}}</td>
+                    <td>{{$value.appName}}</td>
+                    <td>{{$value.creator}}</td>
+                    <td>{{$value.createTime}}</td>
+                </tr>
+                {{/each}}
+                </tbody>
+            </table>
+        </script>
+    </div>
+    <script>
+        function refreshList(){
+            $.get("/uam/application/applicationPage",function(data,status){
+                var html = template('table1', data);
+                document.getElementById('content').innerHTML = html;
+            });
+        }
+
+        // 打开添加页
+        function openAddPage(){
+            layer.open({
+              type: 2,
+              area: ['700px', '300px'],
+              fixed: false, //不固定
+              maxmin: true,
+              content: '/uam/application/addApplication'
+            });
+        }
+
+        // 刷新列表
+        refreshList();
+    </script>
+</section>
+</body>
+</html>

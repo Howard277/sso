@@ -1,0 +1,78 @@
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout/dialogLayout">
+<head>
+    <title>添加应用系统</title>
+</head>
+<body>
+<section layout:fragment="content">
+    <form class="layui-form" action="">
+        <div class="layui-form-item">
+            <label class="layui-form-label">系统编号</label>
+            <div class="layui-input-block">
+                <input type="text" placeholder="系统编号" class="input-text radius size-M" name="appCode" id="appCode"/>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">系统名称</label>
+            <div class="layui-input-block">
+                <input type="text" placeholder="系统名称" class="input-text radius size-M" name="appName" id="appName"/>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">描述</label>
+            <div class="layui-input-block">
+            <textarea placeholder="描述信息..." class="input-text radius size-M" name="description"
+                      style="height:80px;" id="description"/>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <a class="btn btn-primary radius" type="button" id="submit" onclick="submit()"><i
+                        class="Hui-iconfont">&#xe603;</i>提交</a>
+                <a class="btn btn-primary radius" type="button" id="cancel" onclick="cancel()"><i
+                        class="Hui-iconfont">&#xe66b;</i>取消</a>
+            </div>
+        </div>
+    </form>
+    <script type="text/javascript">
+    // 取消
+    function cancel(){
+        $('#appCode').val('');
+        $('#appName').val('');
+        $('#description').val('');
+    }
+
+    // 提交
+    function submit(){
+        var appCode = $('#appCode').val();
+        var appName = $('#appName').val();
+        var description = $('#description').val();
+        if(appCode.length==0){
+            layer.msg('系统编码必填！', {icon: 5});
+            return
+        }
+        if(appName.length==0){
+            layer.msg('系统名称必填！', {icon: 5});
+            return
+        }
+        $.post('/uam/application/saveApplication',
+            {'appCode':appCode,'appName':appName,'description':description},
+            function(data){
+                if(data.flag){
+                    layer.alert('提交成功！', {icon: 6},function () {
+                        window.parent.refreshList();
+                    });
+                    layer.closeAll();
+                }else{
+                    layer.msg('alert！', {icon: 5});
+                }
+            }
+        );
+    }
+
+
+
+
+    </script>
+</section>
+</body>
+</html>

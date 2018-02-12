@@ -43,6 +43,12 @@ public class Organization {
     private String parentOrgId;
 
     /**
+     * 父级机构名称
+     */
+    @Column(length = 100)
+    private String parentOrgName;
+
+    /**
      * 机构地址
      */
     @Column(length = 100)
